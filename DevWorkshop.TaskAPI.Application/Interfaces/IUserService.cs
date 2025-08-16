@@ -1,0 +1,80 @@
+using DevWorkshop.TaskAPI.Application.DTOs.Users;
+
+namespace DevWorkshop.TaskAPI.Application.Interfaces;
+
+/// <summary>
+/// Interfaz para el servicio de usuarios
+/// </summary>
+public interface IUserService
+{
+    /// <summary>
+    /// Obtiene todos los usuarios activos
+    /// </summary>
+    /// <returns>Lista de usuarios</returns>
+    Task<IEnumerable<UserDto>> GetAllUsersAsync();
+
+    /// <summary>
+    /// Obtiene un usuario por su ID
+    /// </summary>
+    /// <param name="userId">ID del usuario</param>
+    /// <returns>Usuario encontrado o null</returns>
+    Task<UserDto?> GetUserByIdAsync(int userId);
+
+    /// <summary>
+    /// Obtiene un usuario por su email
+    /// </summary>
+    /// <param name="email">Email del usuario</param>
+    /// <returns>Usuario encontrado o null</returns>
+    Task<UserDto?> GetUserByEmailAsync(string email);
+
+    /// <summary>
+    /// Crea un nuevo usuario
+    /// </summary>
+    /// <param name="createUserDto">Datos del usuario a crear</param>
+    /// <returns>Usuario creado</returns>
+    Task<UserDto> CreateUserAsync(CreateUserDto createUserDto);
+
+    /// <summary>
+    /// Actualiza un usuario existente
+    /// </summary>
+    /// <param name="userId">ID del usuario a actualizar</param>
+    /// <param name="updateUserDto">Datos a actualizar</param>
+    /// <returns>Usuario actualizado o null si no existe</returns>
+    Task<UserDto?> UpdateUserAsync(int userId, UpdateUserDto updateUserDto);
+
+    /// <summary>
+    /// Elimina un usuario (soft delete)
+    /// </summary>
+    /// <param name="userId">ID del usuario a eliminar</param>
+    /// <returns>True si se eliminó correctamente</returns>
+    Task<bool> DeleteUserAsync(int userId);
+
+    /// <summary>
+    /// Verifica si un email ya está en uso
+    /// </summary>
+    /// <param name="email">Email a verificar</param>
+    /// <param name="excludeUserId">ID de usuario a excluir de la verificación</param>
+    /// <returns>True si el email está en uso</returns>
+    Task<bool> EmailExistsAsync(string email, int? excludeUserId = null);
+
+    /// <summary>
+    /// Obtiene la entidad User completa por email (incluye PasswordHash)
+    /// </summary>
+    /// <param name="email">Email del usuario</param>
+    /// <returns>Entidad User completa o null</returns>
+    Task<DevWorkshop.TaskAPI.Domain.Entities.User?> GetUserEntityByEmailAsync(string email);
+
+    /// <summary>
+    /// Obtiene la entidad User completa por ID (incluye PasswordHash)
+    /// </summary>
+    /// <param name="userId">ID del usuario</param>
+    /// <returns>Entidad User completa o null</returns>
+    Task<DevWorkshop.TaskAPI.Domain.Entities.User?> GetUserEntityByIdAsync(int userId);
+
+    /// <summary>
+    /// Actualiza una entidad User en la base de datos
+    /// </summary>
+    /// <param name="user">Entidad User a actualizar</param>
+    /// <returns>True si la actualización fue exitosa</returns>
+    Task<bool> UpdateUserEntityAsync(DevWorkshop.TaskAPI.Domain.Entities.User user);
+}
